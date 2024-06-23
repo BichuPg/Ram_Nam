@@ -1061,37 +1061,85 @@ async def save_template(client, message):
     await save_group_settings(grp_id, 'template', template)
     await sts.edit(f"Successfully changed template for {title} to\n\n{template}")
 
-@Client.on_message((filters.command(["request", "Request"]) | filters.regex("#request") | filters.regex("#Request")))
-#@Client.on_message(filters.command('request') & filters.incoming & filters.text)
-async def requests(client, message):
-    search = message.text
-    requested_movie = search.replace("/request", "").replace("/Request", "").replace("#Request", "").replace("#request", "").strip()
-    files, offset, total_results = await get_search_results(requested_movie.lower(), offset=0, filter=True)
-    user_id = message.from_user.id
-    if not requested_movie:
-        await message.reply_text("🙅 (फिल्म रिक्वेस्ट करने के लिए कृपया फिल्म का नाम और साल साथ में लिखें\nकुछ इस तरह 👇\n<code>/request Pushpa 2021</code>")
-        return
-    if files:
-        await message.reply_text(f"Hᴇʏ {message.from_user.mention},\n\nʏᴏᴜʀ ʀᴇǫᴜᴇꜱᴛ ɪꜱ ᴀʟʀᴇᴀᴅʏ ᴀᴠᴀɪʟᴀʙʟᴇ ✅\n\n📂 ꜰɪʟᴇꜱ ꜰᴏᴜɴᴅ : {total_results}\n🔍 ꜱᴇᴀʀᴄʜ : <code>{requested_movie}</code>\n\n‼️ ᴛʜɪs ɪs ᴀ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ sᴏ ᴛʜᴀᴛ ʏᴏᴜ ᴄᴀɴ'ᴛ ɢᴇᴛ ғɪʟᴇs ғʀᴏᴍ ʜᴇʀᴇ...", reply_to_message_id=message.id,
-        reply_markup=InlineKeyboardMarkup([[
-            InlineKeyboardButton('📝 ꜱᴇᴀʀᴄʜ ʜᴇʀᴇ : 👇', url=GRP_LNK)]]))
-    else:    
-        await message.reply_text(text=f"✅ Your Movie -  <b> {requested_movie} </b> Has Been Sent For Request.\n\n🚀 Your Movie Will Be Uploaded Within 24hr \n\n📌 You Will Be Notified When Your Movie Will Be Uploaded")
-        await client.send_message(LOG_CHANNEL,f"📝 #REQUESTED_CONTENT 📝\n\nʙᴏᴛ - {temp.B_NAME}\nɴᴀᴍᴇ - {message.from_user.mention} (<code>{message.from_user.id}</code>)\nRᴇǫᴜᴇꜱᴛ - <code>{requested_movie}</code>",
-        reply_markup=InlineKeyboardMarkup(
-            [[
-                InlineKeyboardButton('Not Release📅', callback_data=f"not_release:{user_id}:{requested_movie}"),
-            ],[
-                InlineKeyboardButton('Already Available🕵️', callback_data=f"already_available:{user_id}:{requested_movie}"),
-                InlineKeyboardButton('Not Available🙅', callback_data=f"not_available:{user_id}:{requested_movie}")
-            ],[
-                InlineKeyboardButton('Uploaded Done✅', callback_data=f"uploaded:{user_id}:{requested_movie}")
-            ],[
-                InlineKeyboardButton('Series Msg📝', callback_data=f"series:{user_id}:{requested_movie}"),
-                InlineKeyboardButton('Spell Msg✍️', callback_data=f"spelling_error:{user_id}:{requested_movie}")
-            ],[
-                InlineKeyboardButton('⁉️ Close ⁉️', callback_data=f"close_data")]
-            ]))
+@Client.on_message((filters.command(["request", "Request"]) | filters.regex("#request") | filters.regex("#Request")) & filters.group)
+async def requests(bot, message):
+    if REQST_CHANNEL is None or SUPPORT_CHAT_ID is None: return # Must add REQST_CHANNEL and SUPPORT_CHAT_ID to use this feature
+    if message.reply_to_message and SUPPORT_CHAT_ID == message.chat.id:
+        chat_id = message.chat.id
+        reporter = str(message.from_user.id)
+        mention = message.from_user.mention
+        success = True
+        content = message.reply_to_message.text
+        try:
+            if REQST_CHANNEL is not None:
+                btn = [[
+                        InlineKeyboardButton('View Request', url=f"{message.reply_to_message.link}"),
+                        InlineKeyboardButton('Show Options', callback_data=f'show_option#{reporter}')
+                      ]]
+                reported_post = await bot.send_message(chat_id=REQST_CHANNEL, text=f"<b>𝖱𝖾𝗉𝗈𝗋𝗍𝖾𝗋 : {mention} ({reporter})\n\n𝖬𝖾𝗌𝗌𝖺𝗀𝖾 : {content}</b>", reply_markup=InlineKeyboardMarkup(btn))
+                success = True
+            elif len(content) >= 3:
+                for admin in ADMINS:
+                    btn = [[
+                        InlineKeyboardButton('View Request', url=f"{message.reply_to_message.link}"),
+                        InlineKeyboardButton('Show Options', callback_data=f'show_option#{reporter}')
+                      ]]
+                    reported_post = await bot.send_message(chat_id=admin, text=f"<b>𝖱𝖾𝗉𝗈𝗋𝗍𝖾𝗋 : {mention} ({reporter})\n\n𝖬𝖾𝗌𝗌𝖺𝗀𝖾 : {content}</b>", reply_markup=InlineKeyboardMarkup(btn))
+                    success = True
+            else:
+                if len(content) < 3:
+                    await message.reply_text("<b>You must type about your request [Minimum 3 Characters]. Requests can't be empty.</b>")
+            if len(content) < 3:
+                success = False
+        except Exception as e:
+            await message.reply_text(f"Error: {e}")
+            pass
+        
+    elif SUPPORT_CHAT_ID == message.chat.id:
+        chat_id = message.chat.id
+        reporter = str(message.from_user.id)
+        mention = message.from_user.mention
+        success = True
+        content = message.text
+        keywords = ["#request", "/request", "#Request", "/Request"]
+        for keyword in keywords:
+            if keyword in content:
+                content = content.replace(keyword, "")
+        try:
+            if REQST_CHANNEL is not None and len(content) >= 3:
+                btn = [[
+                        InlineKeyboardButton('View Request', url=f"{message.link}"),
+                        InlineKeyboardButton('Show Options', callback_data=f'show_option#{reporter}')
+                      ]]
+                reported_post = await bot.send_message(chat_id=REQST_CHANNEL, text=f"<b>𝖱𝖾𝗉𝗈𝗋𝗍𝖾𝗋 : {mention} ({reporter})\n\n𝖬𝖾𝗌𝗌𝖺𝗀𝖾 : {content}</b>", reply_markup=InlineKeyboardMarkup(btn))
+                success = True
+            elif len(content) >= 3:
+                for admin in ADMINS:
+                    btn = [[
+                        InlineKeyboardButton('View Request', url=f"{message.link}"),
+                        InlineKeyboardButton('Show Options', callback_data=f'show_option#{reporter}')
+                      ]]
+                    reported_post = await bot.send_message(chat_id=admin, text=f"<b>𝖱𝖾𝗉𝗈𝗋𝗍𝖾𝗋 : {mention} ({reporter})\n\n𝖬𝖾𝗌𝗌𝖺𝗀𝖾 : {content}</b>", reply_markup=InlineKeyboardMarkup(btn))
+                    success = True
+            else:
+                if len(content) < 3:
+                    await message.reply_text("<b>You must type about your request [Minimum 3 Characters]. Requests can't be empty.</b>")
+            if len(content) < 3:
+                success = False
+        except Exception as e:
+            await message.reply_text(f"Error: {e}")
+            pass
+
+    else:
+        success = False
+    
+    if success:
+        link = await bot.create_chat_invite_link(int(REQST_CHANNEL))
+        btn = [[
+                InlineKeyboardButton('Join Channel', url=link.invite_link),
+                InlineKeyboardButton('View Request', url=f"{reported_post.link}")
+              ]]
+        await message.reply_text("<b>Your request has been added! Please wait for some time.\n\nJoin Channel First & View Request</b>", reply_markup=InlineKeyboardMarkup(btn))
 
                                                                             
     
