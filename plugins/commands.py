@@ -176,7 +176,6 @@ async def start(client, message):
         else:
             if PREMIUM_AND_REFERAL_MODE == True:
                 buttons = [[
-                    InlineKeyboar[[
                 InlineKeyboardButton('🏆 Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ 🏆', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
             ],[
                 InlineKeyboardButton('⚡ Uᴘᴅᴀᴛᴇs Cʜᴀɴɴᴇʟ ⚡', url=CHNL_LNK),
