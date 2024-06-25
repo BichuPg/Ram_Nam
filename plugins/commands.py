@@ -53,7 +53,7 @@ async def start(client, message):
                 InlineKeyboardButton('🔖 Mᴏᴠɪᴇ Gʀᴏᴜᴘ 🔖', url=GRP_LNK)
             ],[
                 InlineKeyboardButton('🛡️ 𝙵𝚎𝚊𝚝𝚞𝚛𝚎𝚜 🛡️', callback_data='help'),
-                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮, callback_data='about')
+                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮', callback_data='about')
             ],[
                 InlineKeyboardButton('🎁 𝙶𝚎𝚝 𝙿𝚛𝚎𝚖𝚒𝚞𝚖 𝙵𝚘𝚛 𝙵𝚛𝚎𝚎 🎁', callback_data='subscription')
             ],[
@@ -68,7 +68,7 @@ async def start(client, message):
                 InlineKeyboardButton('🔖 Mᴏᴠɪᴇ Gʀᴏᴜᴘ 🔖', url=GRP_LNK)
             ],[
                 InlineKeyboardButton('🛡️ 𝙵𝚎𝚊𝚝𝚞𝚛𝚎𝚜 🛡️', callback_data='help'),
-                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮, callback_data='about')
+                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮', callback_data='about')
             ],[
                 InlineKeyboardButton('💸 Eᴀʀɴ Mᴏɴᴇʏ 💸', callback_data="shortlink_info")
             ]]
@@ -128,7 +128,7 @@ async def start(client, message):
                 InlineKeyboardButton('🔖 Mᴏᴠɪᴇ Gʀᴏᴜᴘ 🔖', url=GRP_LNK)
             ],[
                 InlineKeyboardButton('🛡️ 𝙵𝚎𝚊𝚝𝚞𝚛𝚎𝚜 🛡️', callback_data='help'),
-                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮, callback_data='about')
+                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮', callback_data='about')
             ],[
                 InlineKeyboardButton('🎁 𝙶𝚎𝚝 𝙿𝚛𝚎𝚖𝚒𝚞𝚖 𝙵𝚘𝚛 𝙵𝚛𝚎𝚎 🎁', callback_data='subscription')
             ],[
@@ -143,7 +143,7 @@ async def start(client, message):
                 InlineKeyboardButton('🔖 Mᴏᴠɪᴇ Gʀᴏᴜᴘ 🔖', url=GRP_LNK)
             ],[
                 InlineKeyboardButton('🛡️ 𝙵𝚎𝚊𝚝𝚞𝚛𝚎𝚜 🛡️', callback_data='help'),
-                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮, callback_data='about')
+                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮', callback_data='about')
             ],[
                 InlineKeyboardButton('💸 Eᴀʀɴ Mᴏɴᴇʏ 💸', callback_data="shortlink_info")
             ]]
@@ -183,7 +183,7 @@ async def start(client, message):
                 InlineKeyboardButton('🔖 Mᴏᴠɪᴇ Gʀᴏᴜᴘ 🔖', url=GRP_LNK)
             ],[
                 InlineKeyboardButton('🛡️ 𝙵𝚎𝚊𝚝𝚞𝚛𝚎𝚜 🛡️', callback_data='help'),
-                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮, callback_data='about')
+                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮', callback_data='about')
             ],[
                 InlineKeyboardButton('🎁 𝙶𝚎𝚝 𝙿𝚛𝚎𝚖𝚒𝚞𝚖 𝙵𝚘𝚛 𝙵𝚛𝚎𝚎 🎁', callback_data='subscription')
             ],[
@@ -198,7 +198,7 @@ async def start(client, message):
                 InlineKeyboardButton('🔖 Mᴏᴠɪᴇ Gʀᴏᴜᴘ 🔖', url=GRP_LNK)
             ],[
                 InlineKeyboardButton('🛡️ 𝙵𝚎𝚊𝚝𝚞𝚛𝚎𝚜 🛡️', callback_data='help'),
-                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮, callback_data='about')
+                InlineKeyboardButton('🔮 Aʙᴏᴜᴛ 🔮', callback_data='about')
             ],[
                 InlineKeyboardButton('💸 Eᴀʀɴ Mᴏɴᴇʏ 💸', callback_data="shortlink_info")
             ]]
