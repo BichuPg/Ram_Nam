@@ -189,7 +189,7 @@ async def start(client, message):
             ],[
                 InlineKeyboardButton('💸 Eᴀʀɴ Mᴏɴᴇʏ 💸', callback_data="shortlink_info")
             ]]
-        else:
+            else:
             buttons = [[
                 InlineKeyboardButton('🏆 Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ Gʀᴏᴜᴘ 🏆', url=f'http://t.me/{temp.U_NAME}?startgroup=true')
             ],[
